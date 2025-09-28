@@ -1,0 +1,99 @@
+{% extends 'skills/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="todos-container">
+    <!-- Заголовок -->
+    <div class="todos-header">
+        <h1 class="todos-title">✅ Задачи</h1>
+        <div class="todos-count">Всего задач: {{ todos.count }}</div>
+    </div>
+
+    <!-- Кнопки действий -->
+    <div class="todos-actions">
+        <a href="{% url 'createtodo' %}" class="action-btn create-btn">
+            ➕ Создать новую задачу
+        </a>
+        <a href="{% url 'completedtodos' %}" class="action-btn completed-btn">
+            ✅ Выполненные задачи
+        </a>
+    </div>
+
+    <!-- Список задач в виде строк -->
+    <div class="todos-list">
+        {% for todo in todos %}
+        <div class="todo-row {% if todo.important %}todo-important{% endif %} {% if todo.completed %}todo-completed{% endif %}">
+            <div class="todo-info">
+                <div class="todo-main">
+                    <h3 class="todo-title">
+                        <a href="{% url 'viewtodo' todo.id %}" class="todo-link">
+                            {% if todo.important %}⭐ {% endif %}{{ todo.title }}
+                        </a>
+                    </h3>
+                    {% if todo.memo %}
+                    <p class="todo-memo">{{ todo.memo|striptags|truncatechars:200 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="todo-meta">
+                    <span class="todo-date">📅 {{ todo.date|date:'d.m.Y' }}</span>
+                    {% if todo.completed %}
+                    <span class="todo-status completed">✅ Выполнено</span>
+                    {% else %}
+                    <span class="todo-status pending">⏳ В работе</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="todo-actions">
+                <a href="{% url 'viewtodo' todo.id %}" class="btn view-btn" title="Просмотр">
+                    👁️
+                </a>
+
+                {% if not todo.completed %}
+                <form action="{% url 'completetodo' todo.id %}" method="POST" class="todo-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn complete-btn" title="Завершить задачу">
+                        ✅
+                    </button>
+                </form>
+                {% endif %}
+
+                <form action="{% url 'deletetodo' todo.id %}" method="POST" class="todo-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn delete-btn" title="Удалить в корзину">
+                        🗑️
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-todos">
+            <div class="empty-icon">📝</div>
+            <h3>Нет активных задач</h3>
+            <p>Создайте свою первую задачу или посмотрите выполненные</p>
+            <div class="empty-actions">
+                <a href="{% url 'createtodo' %}" class="btn create-btn">
+                    ➕ Создать задачу
+                </a>
+                <a href="{% url 'completedtodos' %}" class="btn completed-btn">
+                    ✅ Выполненные
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Кнопка корзины -->
+    <div class="trash-section">
+        <a href="{% url 'trashbin' %}" class="trash-btn">
+            🗑️ Просмотр Корзины (удаленные задачи)
+        </a>
+    </div>
+</div>
+
+{% endblock %}
+
+
+

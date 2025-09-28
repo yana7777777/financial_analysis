@@ -1,0 +1,14 @@
+{% extends 'skills/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Загрузка финансового документа</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить и проанализировать</button>
+    </form>
+</div>
+{% endblock %}

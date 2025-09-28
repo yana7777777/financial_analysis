@@ -1,0 +1,34 @@
+{% extends 'skills/base.html' %}
+
+{% block content %}
+
+<h1>{{ todo.title }}</h1>
+
+<h3>{{ error }}</h3>
+<div class="but">
+  <form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button class="btn">Сохранить</button>
+  </form>
+
+  <form action="{% url 'completetodo' todo.id %}" method="post">
+    {% csrf_token %}
+    <button class="btn good">Выполнено</button>
+  </form>
+
+
+<!--  <form action="{% url 'deletetodo' todo.id %}" method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <button class="btn remove">Удалить</button>-->
+
+<!--  </form>-->
+
+  <form action="{% url 'softdeletetodo' todo.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn remove">Отправить в корзину</button>
+    </form>
+
+
+  </div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'skills/base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="text-primary">✅ Выполненные задачи</h1>
+                <a href="{% url 'currenttodos' %}" class="btn btn-outline-primary">
+                    ← К текущим задачам
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Выполненные задачи -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">🎯 Завершенные задачи</h4>
+                </div>
+                <div class="card-body">
+                    {% if todos %}
+                    <div class="list-group">
+                        {% for todo in todos %}
+                        <div class="list-group-item list-group-item-action border-0 mb-2 rounded">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <a href="{% url 'viewtodo' todo.id %}" class="text-decoration-none text-dark">
+                                        <h6 class="mb-1">
+                                            {% if todo.important %}
+                                            <span class="badge bg-danger me-2">❗</span>
+                                            <strong>{{ todo.title }}</strong>
+                                            {% else %}
+                                            {{ todo.title }}
+                                            {% endif %}
+                                        </h6>
+                                        {% if todo.memo %}
+                                        <p class="mb-1 text-muted small">{{ todo.memo }}</p>
+                                        {% endif %}
+                                    </a>
+                                    <small class="text-success">
+                                        ✅ Выполнено: {{ todo.date_completed|date:"d.m.Y H:i" }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-check-circle fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Нет выполненных задач</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Удаленные задачи -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">🗑️ Удаленные задачи</h4>
+                </div>
+                <div class="card-body">
+                    {% if delete_todos %}
+                    <div class="list-group">
+                        {% for todo in delete_todos %}
+                        <div class="list-group-item list-group-item-action border-0 mb-2 rounded">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <a href="{% url 'viewtodo' todo.id %}" class="text-decoration-none text-dark">
+                                        <h6 class="mb-1">
+                                            {% if todo.important %}
+                                            <span class="badge bg-danger me-2">❗</span>
+                                            <strong>{{ todo.title }}</strong>
+                                            {% else %}
+                                            {{ todo.title }}
+                                            {% endif %}
+                                        </h6>
+                                        {% if todo.memo %}
+                                        <p class="mb-1 text-muted small">{{ todo.memo }}</p>
+                                        {% endif %}
+                                    </a>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-muted">
+                                            📅 Создано: {{ todo.created|date:"d.m.Y H:i" }}
+                                        </small>
+                                        <form action="{% url 'restoretodo' todo.id %}" method="post" class="ms-2">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-success">
+                                                ↪️ Восстановить
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-trash-alt fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Корзина пуста</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

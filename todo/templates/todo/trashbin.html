@@ -1,0 +1,102 @@
+{% extends 'skills/base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Заголовок -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="text-danger">
+                    🗑️ Корзина
+                </h1>
+                <a href="{% url 'currenttodos' %}" class="btn btn-outline-primary">
+                    ← Вернуться к задачам
+                </a>
+            </div>
+
+            <!-- Карточка с задачами -->
+            <div class="card shadow-lg">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Удаленные задачи</h4>
+                    <small>Всего задач: {{ delete_todos|length }}</small>
+                </div>
+
+                <div class="card-body">
+                    {% if delete_todos %}
+                    <div class="list-group">
+                        {% for todo in delete_todos %}
+                        <div class="list-group-item list-group-item-action border-0 mb-3 rounded todo-element">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <!-- Информация о задаче -->
+                                <div class="flex-grow-1 me-3">
+                                    <a href="{% url 'viewtodo' todo.id %}" class="text-decoration-none text-dark">
+                                        <h6 class="mb-1">
+                                            {% if todo.important %}
+                                            <span class="badge bg-warning me-2">❗ Важная</span>
+                                            {% endif %}
+                                            {{ todo.title }}
+                                        </h6>
+                                        {% if todo.memo %}
+                                        <p class="mb-2 text-muted small">{{ todo.memo|truncatewords:20 }}</p>
+                                        {% endif %}
+                                        <small class="text-muted">
+                                            📅 Создано: {{ todo.created|date:"d.m.Y H:i" }}
+                                        </small>
+                                    </a>
+                                </div>
+
+                                <!-- Кнопки действий -->
+                                <div class="d-flex flex-column gap-2 restore">
+                                    <form action="{% url 'restoretodo' todo.id %}" method="post" class="mb-0">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            ↪️ Восстановить
+                                        </button>
+                                    </form>
+
+                                    <form action="{% url 'deletetodo' todo.id %}" method="post" class="mb-0">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-danger btn-sm remove">
+                                            🗑️ Удалить
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <!-- Состояние пустой корзины -->
+                    <div class="text-center py-5">
+                        <div class="empty-state">
+                            <i class="fas fa-trash-alt fa-4x text-muted mb-3"></i>
+                            <h5 class="text-muted">Корзина пуста</h5>
+                            <p class="text-muted">Здесь будут отображаться удаленные задачи</p>
+                            <a href="{% url 'currenttodos' %}" class="btn btn-primary mt-2">
+                                ← Вернуться к задачам
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if delete_todos %}
+                <!-- Футер карточки -->
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            📝 Для полного удаления нажмите "Удалить"
+                        </small>
+                        <span class="badge bg-secondary">
+                            Задач: {{ delete_todos|length }}
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

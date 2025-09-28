@@ -1,0 +1,55 @@
+{% extends 'skills/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="blog-container">
+    <!-- Заголовок -->
+    <div class="blog-header">
+        <h1 class="blog-title">📝 Блог</h1>
+        <div class="blog-count">Постов: {{ blogs.count }}</div>
+    </div>
+
+    <!-- Сетка постов -->
+    <div class="blogs-grid">
+        {% for blog in blogs %}
+        <div class="blog-card">
+            <div class="card-header">
+                <h2 class="blog-card-title">
+                    <a href="{% url 'detail' blog.id %}" class="blog-link">
+                        {{ blog.title }}
+                    </a>
+                </h2>
+                <div class="blog-date">
+                    📅 {{ blog.date|date:'d.m.Y' }}
+                </div>
+            </div>
+
+            <div class="blog-content">
+                <div class="blog-description">
+                    {{ blog.description|striptags|truncatechars:360 }}
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <a href="{% url 'detail' blog.id %}" class="read-more-btn">
+                    📖 Читать далее →
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Если нет постов -->
+    {% if not blogs %}
+    <div class="no-blogs">
+        <div class="empty-state">
+            <div class="empty-icon">📝</div>
+            <h3>Пока нет постов</h3>
+            <p>Будьте первым, кто поделится интересной статьей!</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

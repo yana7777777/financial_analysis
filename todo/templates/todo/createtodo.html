@@ -1,0 +1,111 @@
+{% extends 'skills/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">📝 Создание новой задачи</h2>
+                </div>
+
+                <div class="card-body">
+                    {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Ошибка!</strong> {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">Название задачи:</label>
+                            {{ form.title }}
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите название задачи.
+                            </div>
+                        </div>
+
+                        {% if form.description %}
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">Описание:</label>
+                            {{ form.description }}
+                        </div>
+                        {% else %}
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Описание (необязательно):</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"
+                                      placeholder="Добавьте подробное описание задачи..."></textarea>
+                        </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.important.id_for_label }}" class="form-check-label">
+                                {{ form.important }} Важная задача
+                            </label>
+                        </div>
+
+                        {% if form.deadline %}
+                        <div class="mb-3">
+                            <label for="{{ form.deadline.id_for_label }}" class="form-label">Срок выполнения:</label>
+                            {{ form.deadline }}
+                            <small class="form-text text-muted">Необязательное поле</small>
+                        </div>
+                        {% else %}
+                        <div class="mb-3">
+                            <label for="deadline" class="form-label">Срок выполнения:</label>
+                            <input type="datetime-local" class="form-control" id="deadline" name="deadline">
+                            <small class="form-text text-muted">Необязательное поле</small>
+                        </div>
+                        {% endif %}
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                ✅ Создать задачу
+                            </button>
+                            <a href="{% url 'currenttodos' %}" class="btn btn-outline-secondary">
+                                ↩️ Назад к списку задач
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Валидация формы
+(function () {
+    'use strict'
+
+    var forms = document.querySelectorAll('.needs-validation')
+
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+
+// Установка минимальной даты для deadline (текущая дата)
+document.addEventListener('DOMContentLoaded', function() {
+    const deadlineField = document.getElementById('deadline');
+    if (deadlineField) {
+        const now = new Date();
+        const localDateTime = now.toISOString().slice(0, 16);
+        deadlineField.min = localDateTime;
+    }
+});
+</script>
+
+{% endblock %}

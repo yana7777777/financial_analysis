@@ -1,0 +1,88 @@
+{% extends 'skills/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="financial-content">
+    <h1>📊 Финансовый анализ</h1>
+
+    <div class="financial-description">
+        <p>Анализ бухгалтерской отчетности и расчет финансовых коэффициентов</p>
+    </div>
+
+    <!-- Основные действия -->
+    <div class="financial-actions">
+        <div class="action-card">
+            <div class="action-icon">📁</div>
+            <h3>Загрузка документов</h3>
+            <p>Загрузите бухгалтерскую отчетность для анализа</p>
+            <a href="{% url 'financial_upload' %}" class="action-button upload-button">
+                Загрузить документ
+            </a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">📋</div>
+            <h3>Список документов</h3>
+            <p>Просмотр всех загруженных финансовых документов</p>
+            <a href="{% url 'financial_list' %}" class="action-button list-button">
+                Посмотреть список
+            </a>
+        </div>
+    </div>
+
+    <!-- Последние документы -->
+    {% if user.is_authenticated %}
+    <div class="recent-section">
+        <h2>📌 Последние документы</h2>
+        {% if recent_docs %}
+            <div class="documents-grid">
+                {% for doc in recent_docs %}
+                <div class="document-item">
+                    <h4>{{ doc.title }}</h4>
+                    <div class="document-info">
+                        <span class="doc-type">{{ doc.get_document_type_display }}</span>
+                        <span class="doc-date">{{ doc.upload_date|date:"d.m.Y" }}</span>
+                    </div>
+                    <a href="{% url 'financial_results' doc.id %}" class="view-analysis-btn">
+                        Смотреть анализ
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-documents">Нет загруженных документов</p>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="login-required">
+        <h3>🔒 Требуется авторизация</h3>
+        <p>Для работы с финансовыми документами необходимо войти в систему</p>
+        <div class="auth-buttons">
+            <a href="{% url 'loginuser' %}" class="auth-btn login-btn">Войти</a>
+            <a href="{% url 'signupuser' %}" class="auth-btn signup-btn">Зарегистрироваться</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Информация о форматах -->
+    <div class="formats-info">
+        <h2>ℹ️ Поддерживаемые форматы</h2>
+        <div class="formats-list">
+            <div class="format-item">
+                <span class="format-icon">📄</span>
+                <span>Бухгалтерский баланс (форма №1)</span>
+            </div>
+            <div class="format-item">
+                <span class="format-icon">📄</span>
+                <span>Отчет о финансовых результатах (форма №2)</span>
+            </div>
+            <div class="format-item">
+                <span class="format-icon">📄</span>
+                <span>PDF-документы с текстом</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

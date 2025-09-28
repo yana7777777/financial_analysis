@@ -1,0 +1,22 @@
+{% extends 'skills/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Мои финансовые документы</h2>
+    
+    {% for document in documents %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ document.title }}</h5>
+            <p class="card-text">Тип: {{ document.get_document_type_display }}</p>
+            <p class="card-text">Дата загрузки: {{ document.upload_date }}</p>
+            <a href="{% url 'financial_results' document.id %}" class="btn btn-primary">Просмотреть результаты</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>Нет загруженных документов</p>
+    {% endfor %}
+    
+    <a href="{% url 'financial_upload' %}" class="btn btn-success">Загрузить новый документ</a>
+</div>
+{% endblock %}
