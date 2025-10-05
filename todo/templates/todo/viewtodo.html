@@ -1,34 +1,75 @@
 {% extends 'skills/base.html' %}
+{% load static %}
 
 {% block content %}
 
-<h1>{{ todo.title }}</h1>
+<div class="todo-detail-container">
+    <!-- Заголовок -->
+    <div class="todo-detail-header">
+        <h1 class="todo-detail-title">
+            {% if todo.important %}⭐ {% endif %}{{ todo.title }}
+        </h1>
+        <div class="todo-detail-meta">
+            <span class="todo-date">📅 {{ todo.date|date:'d.m.Y' }}</span>
+            {% if todo.completed %}
+            <span class="todo-status completed">✅ Выполнено</span>
+            {% else %}
+            <span class="todo-status pending">⏳ В работе</span>
+            {% endif %}
+        </div>
+    </div>
 
-<h3>{{ error }}</h3>
-<div class="but">
-  <form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button class="btn">Сохранить</button>
-  </form>
+    <!-- Мемо (если есть) -->
+    {% if todo.memo %}
+    <div class="todo-memo-section">
+        <h3 class="memo-title">📋 Описание:</h3>
+        <p class="todo-memo">{{ todo.memo }}</p>
+    </div>
+    {% endif %}
 
-  <form action="{% url 'completetodo' todo.id %}" method="post">
-    {% csrf_token %}
-    <button class="btn good">Выполнено</button>
-  </form>
+    <!-- Сообщение об ошибке -->
+    {% if error %}
+    <div class="error-message">
+        ⚠️ {{ error }}
+    </div>
+    {% endif %}
 
+    <!-- Формы действий -->
+    <div class="todo-detail-actions">
+        <form method="post" class="todo-action-form">
+            {% csrf_token %}
+            <div class="form-header">
+                <h3>✏️ Редактировать задачу</h3>
+            </div>
+            <div class="form-fields">
+                {{ form }}
+            </div>
+            <button class="btn btn-save">💾 Сохранить изменения</button>
+        </form>
 
-<!--  <form action="{% url 'deletetodo' todo.id %}" method="post">-->
-<!--    {% csrf_token %}-->
-<!--    <button class="btn remove">Удалить</button>-->
+        {% if not todo.completed %}
+        <form action="{% url 'completetodo' todo.id %}" method="post" class="todo-action-form">
+            {% csrf_token %}
+            <div class="form-header">
+                <h3>✅ Отметить как выполненное</h3>
+            </div>
+            <button class="btn btn-complete">✅ Завершить задачу</button>
+        </form>
+        {% endif %}
 
-<!--  </form>-->
+        <form action="{% url 'softdeletetodo' todo.id %}" method="post" class="todo-action-form">
+            {% csrf_token %}
+            <div class="form-header">
+                <h3>🗑️ Переместить в корзину</h3>
+            </div>
+            <button type="submit" class="btn btn-delete">🗑️ Отправить в корзину</button>
+        </form>
+    </div>
 
-  <form action="{% url 'softdeletetodo' todo.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn remove">Отправить в корзину</button>
-    </form>
+    <!-- Навигация -->
+    <div class="todo-navigation">
+        <a href="{% url 'currenttodos' %}" class="nav-btn back-btn">← Назад к списку задач</a>
+    </div>
+</div>
 
-
-  </div>
 {% endblock %}
