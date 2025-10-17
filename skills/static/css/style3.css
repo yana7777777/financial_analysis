@@ -1481,7 +1481,7 @@ button.btn-restore{
 }
 
 .blog-link:hover {
-    color: #e74c3c;
+    color: white;
     text-decoration: none;
 }
 
@@ -2252,7 +2252,14 @@ textarea.form-control {
 .card-header {
     border-radius: 15px 15px 0 0 !important;
     padding: 20px;
-    background: linear-gradient(135deg, #dc3545, #c82333) !important;
+    /*background: linear-gradient(135deg, #dc3545, #c82333) !important;*/
+    background: linear-gradient(135deg, #f95666, #d53d4c) !important;
+}
+
+.card-header:hover {
+    padding: 20px;
+    /*background: linear-gradient(135deg, #dc3545, #c82333) !important;*/
+    background: linear-gradient(135deg, #df9ca3, #d53d4c) !important;
 }
 
 .todo-element {

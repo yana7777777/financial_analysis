@@ -108,7 +108,7 @@ def analyze_document(document):
 
             document.save()
 
-            # Сохраняем коэффициенты в базу - гарантируем float
+            # Сохраняем коэффициенты в базу
             for ratio_name, ratio_value in ratios:
                 # Преобразуем значение в float
                 try:
