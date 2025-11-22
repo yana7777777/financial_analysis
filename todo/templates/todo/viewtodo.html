@@ -50,18 +50,18 @@
         {% if not todo.completed %}
         <form action="{% url 'completetodo' todo.id %}" method="post" class="todo-action-form">
             {% csrf_token %}
-            <div class="form-header">
-                <h3>✅ Отметить как выполненное</h3>
-            </div>
+<!--            <div class="form-header">-->
+<!--                <h3>✅ Отметить как выполненное</h3>-->
+<!--            </div>-->
             <button class="btn btn-complete">✅ Завершить задачу</button>
         </form>
         {% endif %}
 
         <form action="{% url 'softdeletetodo' todo.id %}" method="post" class="todo-action-form">
             {% csrf_token %}
-            <div class="form-header">
-                <h3>🗑️ Переместить в корзину</h3>
-            </div>
+<!--            <div class="form-header">-->
+<!--                <h3>🗑️ Переместить в корзину</h3>-->
+<!--            </div>-->
             <button type="submit" class="btn btn-delete">🗑️ Отправить в корзину</button>
         </form>
     </div>
