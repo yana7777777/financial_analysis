@@ -167,12 +167,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Добавляем подсказку о возможности перетаскивания
     const menuItems = document.querySelectorAll('.menu_total li');
     menuItems.forEach(item => {
-        item.setAttribute('title', 'Перетащите для изменения порядка');
+        item.setAttribute('title', 'Перетаскиваем для изменения порядка');
         item.style.cursor = 'grab';
     });
 });
 
-// Функция для бургер-меню (если еще не добавлена)
+// Функция для бургер-меню
 function toggleMenu() {
     const menu = document.getElementById('mainMenu');
     menu.classList.toggle('show');

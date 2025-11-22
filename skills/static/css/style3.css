@@ -763,6 +763,28 @@ button.btn-restore{
     padding: 20px;
 }
 
+/*-----18/11/2025----skills--index.html-------*/
+
+.financial-container {
+    position: relative;
+}
+
+.financial-hero {
+    position: absolute;
+    top: 20px; 
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.hero-image {
+    width: 30%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+    margin: 0; 
+}
+
 /* Заголовок */
 .page-header {
     text-align: center;
@@ -1419,7 +1441,7 @@ button.btn-restore{
 .blog-title {
     font-size: 3rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: #fff;
     margin-bottom: 15px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
@@ -1448,7 +1470,7 @@ button.btn-restore{
 
 /* Карточка блога */
 .blog-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
@@ -1471,8 +1493,12 @@ button.btn-restore{
     margin-bottom: 15px;
 }
 
+/*.blog-card-title a {
+    color: #fff !important;
+}*/
+
 .blog-link {
-    color: #2c3e50;
+    color: #fff !important;
     text-decoration: none;
     font-size: 1.4rem;
     font-weight: 600;
@@ -1481,12 +1507,12 @@ button.btn-restore{
 }
 
 .blog-link:hover {
-    color: white;
+    color: rgb(246, 244, 144) !important;
     text-decoration: none;
 }
 
 .blog-date {
-    color: #667eea;
+    color: #fff;
     font-weight: 600;
     font-size: 0.9rem;
     display: flex;
@@ -1516,7 +1542,8 @@ button.btn-restore{
     display: inline-block;
     padding: 12px 25px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    /*color: white;*/
+    color: #fbf2f2 !important;
     text-decoration: none;
     border-radius: 25px;
     font-weight: 600;
@@ -1525,10 +1552,16 @@ button.btn-restore{
     cursor: pointer;
 }
 
+/*.card-actions a {
+    color: #f8d3d3 !important;
+    
+}*/
+
 .read-more-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-    color: white;
+    color: rgb(246, 244, 144) !important;
+    /*color: #f1f3f4;*/
     text-decoration: none;
 }
 
@@ -2118,6 +2151,12 @@ textarea.form-control {
     font-weight: 600;
 }
 
+.card-header:hover {
+    transform: translateY(-2px);
+    background-color: #a71e2a !important;
+    color: #fff !important;
+}
+
 .list-group-item {
     border-radius: 10px !important;
     margin-bottom: 8px;
@@ -2157,6 +2196,10 @@ textarea.form-control {
     color: #0d6efd;
 }
 
+.btn-outline-primary {
+    background-color: #1550a9 !important;
+}
+
 .btn-outline-primary:hover {
     background-color: #0d6efd;
     border-color: #0d6efd;
@@ -2173,6 +2216,10 @@ textarea.form-control {
 
 .fa-3x {
     font-size: 3em;
+}
+
+.mb-0:hover {
+    color: #fff;
 }
 
 @media (max-width: 768px) {
@@ -2220,8 +2267,15 @@ textarea.form-control {
 }
 
 /* Иконки через псевдоэлементы */
-.list-group-item::before {
+/*.list-group-item::before {
     content: "•";
+    color: #198754;
+    font-weight: bold;
+    margin-right: 10px;
+}*/
+
+.list-group-item::before {
+    content: "\2022"; /* • */
     color: #198754;
     font-weight: bold;
     margin-right: 10px;
@@ -2231,13 +2285,27 @@ textarea.form-control {
     margin-right: 10px;
 }
 
-.bg-success::before {
+/*.bg-success::before {
     content: "✅";
+    /*✅
+}*/
+
+.bg-success::before {
+    content: "\2705"; /* ✅ */
+    /* или */
+    content: "\2713"; /* ✓ */
+    /* или */
+    content: "\2714"; /* ✔ */
 }
 
 .bg-warning::before {
-    content: "🗑️";
+    content: "\1F5D1"; /* 🗑️ */
 }
+
+/*.bg-warning::before {
+    content: "🗑️";
+    /*🗑️
+}*/
 
 
 /************trushbin.html*******************/
@@ -2816,6 +2884,11 @@ textarea.form-control {
 
 .todo-action-form:hover::before {
     opacity: 1;
+
+}
+
+
+
 
 
 

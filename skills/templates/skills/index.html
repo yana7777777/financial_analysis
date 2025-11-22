@@ -4,18 +4,15 @@
 {% block content %}
 
 <div class="financial-container">
-    <!-- Заголовок -->
     <div class="financial-header">
         <h1 class="financial-title">Финансовая отчетность</h1>
         <div class="title-decoration"></div>
     </div>
 
-    <!-- Главное изображение -->
     <div class="financial-hero">
         <img src="{% static 'skills/wc.jpg' %}" alt="Финансовая отчетность" class="hero-image">
     </div>
 
-    <!-- Виды отчетности -->
     <div class="reports-section">
         <div class="section-header">
             <h2 class="section-title">Виды отчетности</h2>
@@ -33,15 +30,33 @@
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">
-                        <a href="{{ project.url }}" target="_blank" class="title-link">
-                            📄 {{ project.title }}
-                        </a>
+                        {% if project.pdf_file %}
+                            <a href="{{ project.pdf_file.url }}" target="_blank" class="title-link">
+                                📄 {{ project.title }}
+                            </a>
+                        {% elif project.url %}
+                            <a href="{{ project.url }}" target="_blank" class="title-link">
+                                🌐 {{ project.title }}
+                            </a>
+                        {% else %}
+                            <span class="title-link">📁 {{ project.title }}</span>
+                        {% endif %}
                     </h3>
+
                     <p class="card-description">{{ project.description }}</p>
+
                     <div class="card-actions">
-                        <a href="{{ project.url }}" target="_blank" class="view-button">
-                            Открыть отчет →
-                        </a>
+                        {% if project.pdf_file %}
+                            <a href="{{ project.pdf_file.url }}" target="_blank" class="view-button">
+                                Открыть PDF
+                            </a>
+                        {% elif project.url %}
+                            <a href="{{ project.url }}" target="_blank" class="view-button">
+                                Перейти на сайт
+                            </a>
+                        {% else %}
+                            <span class="view-button disabled">Недоступно</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -49,20 +64,19 @@
         </div>
     </div>
 
-    <!-- Блок перехода на финансовый анализ -->
     <div class="analysis-cta">
         <div class="cta-card">
             <div class="cta-icon">📊</div>
             <div class="cta-content">
                 <h3 class="cta-title">Глубокий финансовый анализ</h3>
-                <p class="cta-text">Перейдите в специальный раздел для анализа бухгалтерской отчетности и расчета финансовых коэффициентов</p>
+                <p class="cta-text">Перейдите к анализу бухгалтерской отчетности</p>
                 <a href="{% url 'financial_analysis_page' %}" class="cta-button">
-                    <span class="button-icon">📈</span>
-                    Перейти к финансовому анализу
+                    📈 Перейти к анализу
                 </a>
             </div>
         </div>
     </div>
 </div>
 
-{%  endblock %}
+{% endblock %}
+
