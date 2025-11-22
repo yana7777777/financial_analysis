@@ -46,27 +46,27 @@
                 </div>
             </div>
 
-<!--            <div class="todo-actions">-->
+            <div class="todo-actions">
 <!--                <a href="{% url 'viewtodo' todo.id %}" class="btn view-btn" title="Просмотр">-->
 <!--                    👁️-->
 <!--                </a>-->
 
-<!--                {% if not todo.completed %}-->
-<!--                <form action="{% url 'completetodo' todo.id %}" method="POST" class="todo-form">-->
-<!--                    {% csrf_token %}-->
+                {% if not todo.completed %}
+                <form action="{% url 'completetodo' todo.id %}" method="POST" class="todo-form">
+                    {% csrf_token %}
 <!--                    <button type="submit" class="btn complete-btn" title="Завершить задачу">-->
 <!--                        ✅-->
 <!--                    </button>-->
-<!--                </form>-->
-<!--                {% endif %}-->
+                </form>
+                {% endif %}
 
-<!--                <form action="{% url 'deletetodo' todo.id %}" method="POST" class="todo-form">-->
-<!--                    {% csrf_token %}-->
+                <form action="{% url 'deletetodo' todo.id %}" method="POST" class="todo-form">
+                    {% csrf_token %}
 <!--                    <button type="submit" class="btn delete-btn" title="Удалить в корзину">-->
 <!--                        🗑️-->
 <!--                    </button>-->
-<!--                </form>-->
-<!--            </div>-->
+                </form>
+            </div>
         </div>
         {% empty %}
         <div class="no-todos">
@@ -86,11 +86,11 @@
     </div>
 
     <!-- Кнопка корзины -->
-    <div class="trash-section">
-        <a href="{% url 'trashbin' %}" class="trash-btn">
-            🗑️ Просмотр Корзины (удаленные задачи)
-        </a>
-    </div>
+<!--    <div class="trash-section">-->
+<!--        <a href="{% url 'trashbin' %}" class="trash-btn">-->
+<!--            🗑️ Просмотр Корзины (удаленные задачи)-->
+<!--        </a>-->
+<!--    </div>-->
 </div>
 
 {% endblock %}
